@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #b0e0e6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.controls{
+    margin-top: 20px;
+    padding: 30px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #eb3b5a;
+}
+
+.stopwatch {
+    margin-top: 20px;
+    font-size: 70px;
+    padding: 20px;
+    color: #eb3b5a;
+}
+
+a {
+    text-decoration: none;
+    background-color: #4b7bec;
+    margin: 0 10px;
+    padding: 20px;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0;
+    margin-top: 20px;
+}
+
+li {
+    list-style: none;
+    font-size: 25px;
+}
+
+.this-score {
+    background-color: #eb3b5a;
+    color: #ffffff;
+} 
