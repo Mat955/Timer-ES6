@@ -11,15 +11,6 @@ class Stopwatch extends React.Component {
         }
     }
 
-    pad0(value) {
-        let result = value.toString();
-
-        if (result.length < 2) {
-            result = `0${result}`;
-        }
-        return result;
-    }
-
     format() {
         return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(Math.floor(this.state.times.miliseconds))}`;
     }
@@ -45,22 +36,6 @@ class Stopwatch extends React.Component {
         this.setState({
             running: false
         })
-    }
-
-    calculate(times) {
-        let result = times;
-        result.miliseconds += 1;
-
-        if (result.miliseconds >= 100) {
-            result.seconds += 1;
-            result.miliseconds = 0;
-        }
-
-        if (result.seconds >= 60) {
-            result.minutes += 1;
-            result.seconds = 0;
-        }
-        return result;
     }
 
     reset() {
@@ -89,17 +64,42 @@ class Stopwatch extends React.Component {
         }
     }
 
+    calculate(times) {
+        let result = times;
+        result.miliseconds += 1;
+
+        if (result.miliseconds >= 100) {
+            result.seconds += 1;
+            result.miliseconds = 0;
+        }
+
+        if (result.seconds >= 60) {
+            result.minutes += 1;
+            result.seconds = 0;
+        }
+        return result;
+    }
+
+    pad0(value) {
+        let result = value.toString();
+
+        if (result.length < 2) {
+            result = `0${result}`;
+        }
+        return result;
+    }
+
     render() {
         return (
-            <nav className="main">
-                <button onClick={this.start.bind(this)} id="start">Start</button>
-                <button onClick={this.stop.bind(this)} id="stop">Stop</button>
-                <button onClick={this.reset.bind(this)} id="reset">Reset</button>
-                <button onClick={this.addToList.bind(this)} id="add-score">Add score</button>
-                <button onClick={this.clearList.bind(this)} id="clear-score">Clear scores</button>
-                <div className="stopwatch">{this.format(this.state.times)}</div>
-                <ul className="results"></ul>
-            </nav>
+            React.createElement("container", { className: "container" },
+                React.createElement("button", { onClick: this.start, id: "start" }, "Start"),
+                React.createElement("button", { onClick: this.stop, id: "stop" }, "Stop"),
+                React.createElement("button", { onClick: this.reset, id: "reset" }, "Reset"),
+                React.createElement("button", { onClick: this.addToList, id: "add-score" }, "Add score"),
+                React.createElement("button", { onClick: this.ClearList, id: "clear" }, "Clear scores"),
+                React.createElement("div", { className: "stopwatch" }, this.format(this.state.times)),
+                React.createElement("ul", { className: "results" })
+            )
         )
     }
 }
