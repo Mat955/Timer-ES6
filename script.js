@@ -86,6 +86,31 @@ class Stopwatch extends React.Component {
         return result;
     }
 
+    calculate(times) {
+        let result = times;
+        result.miliseconds += 1;
+
+        if (result.miliseconds >= 100) {
+            result.seconds += 1;
+            result.miliseconds = 0;
+        }
+
+        if (result.seconds >= 60) {
+            result.minutes += 1;
+            result.seconds = 0;
+        }
+        return result;
+    }
+
+    pad0(value) {
+        let result = value.toString();
+
+        if (result.length < 2) {
+            result = `0${result}`;
+        }
+        return result;
+    }
+
     render() {
         return (
             React.createElement("container", { className: "container" },
