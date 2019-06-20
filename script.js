@@ -7,7 +7,8 @@ class Stopwatch extends React.Component {
                 minutes: 0,
                 seconds: 0,
                 miliseconds: 0
-            }
+            },
+            results: []
         }
     }
 
@@ -50,15 +51,17 @@ class Stopwatch extends React.Component {
 
     addToList() {
         document.querySelector(".stopwatch").classList.add("this-score");
-        let element = document.createElement('li');
-        element.innerText = this.format(this.state.times);
-        document.querySelector('.results').appendChild(element);
         setTimeout(() => document.querySelector(".stopwatch").classList.remove("this-score"), 500);
+        const formattedTime = this.format(this.state.times);
+        this.setState({
+            results: this.state.results.concat([formattedTime])
+        });
     }
 
     clearList() {
-        let scoresList = document.querySelector('.results');
-        scoresList.innerText = '';
+        this.setState({
+            results: []
+        })
     }
 
     calculate(times) {
@@ -113,18 +116,17 @@ class Stopwatch extends React.Component {
 
     render() {
         return (
-            React.createElement("container", { className: "container" },
-                React.createElement("a", { onClick: this.start.bind(this), className: "start" }, "Start"),
-                React.createElement("a", { onClick: this.stop.bind(this), className: "stop" }, "Stop"),
-                React.createElement("a", { onClick: this.reset.bind(this), className: "reset" }, "Reset"),
-                React.createElement("a", { onClick: this.addToList.bind(this), className: "add-score" }, "Add score"),
-                React.createElement("a", { onClick: this.clearList.bind(this), className: "clear" }, "Clear scores"),
-                React.createElement("div", { className: "stopwatch" }, this.format(this.state.times)),
-                React.createElement("ul", { className: "results" })
-            )
+            <div className={'container'}>
+                <a className={'start'} onClick={this.start.bind(this)}>Start</a>
+                <a className={'stop'} onClick={this.stop.bind(this)}>Stop</a>
+                <a className={'reset'} onClick={this.reset.bind(this)}>Reset</a>
+                <a className={'add-score'} onClick={this.addToList.bind(this)}>Add Score</a>
+                <a className={'clear'} onClick={this.clearList.bind(this)}>Clear Scores</a>
+                <div className={'stopwatch'}>{this.format(this.state.times)}</div>
+                <ul className={'results'}>{this.state.results.map(result => <li>{(result)}</li>)}</ul>
+            </div>
         )
     }
 }
 
-const app = React.createElement(Stopwatch);
-ReactDOM.render(app, document.getElementById("app"));
+ReactDOM.render(<Stopwatch />, document.getElementById("app"));

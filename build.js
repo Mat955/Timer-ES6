@@ -22,7 +22,8 @@ var Stopwatch = function (_React$Component) {
                 minutes: 0,
                 seconds: 0,
                 miliseconds: 0
-            }
+            },
+            results: []
         };
         return _this;
     }
@@ -73,18 +74,47 @@ var Stopwatch = function (_React$Component) {
         key: "addToList",
         value: function addToList() {
             document.querySelector(".stopwatch").classList.add("this-score");
-            var element = document.createElement('li');
-            element.innerText = this.format(this.state.times);
-            document.querySelector('.results').appendChild(element);
             setTimeout(function () {
                 return document.querySelector(".stopwatch").classList.remove("this-score");
             }, 500);
+            var formattedTime = this.format(this.state.times);
+            this.setState({
+                results: this.state.results.concat([formattedTime])
+            });
         }
     }, {
         key: "clearList",
         value: function clearList() {
-            var scoresList = document.querySelector('.results');
-            scoresList.innerText = '';
+            this.setState({
+                results: []
+            });
+        }
+    }, {
+        key: "calculate",
+        value: function calculate(times) {
+            var result = times;
+            result.miliseconds += 1;
+
+            if (result.miliseconds >= 100) {
+                result.seconds += 1;
+                result.miliseconds = 0;
+            }
+
+            if (result.seconds >= 60) {
+                result.minutes += 1;
+                result.seconds = 0;
+            }
+            return result;
+        }
+    }, {
+        key: "pad0",
+        value: function pad0(value) {
+            var result = value.toString();
+
+            if (result.length < 2) {
+                result = "0" + result;
+            }
+            return result;
         }
     }, {
         key: "calculate",
@@ -116,12 +146,55 @@ var Stopwatch = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            return React.createElement("container", { className: "container" }, React.createElement("a", { onClick: this.start.bind(this), className: "start" }, "Start"), React.createElement("a", { onClick: this.stop.bind(this), className: "stop" }, "Stop"), React.createElement("a", { onClick: this.reset.bind(this), className: "reset" }, "Reset"), React.createElement("a", { onClick: this.addToList.bind(this), className: "add-score" }, "Add score"), React.createElement("a", { onClick: this.clearList.bind(this), className: "clear" }, "Clear scores"), React.createElement("div", { className: "stopwatch" }, this.format(this.state.times)), React.createElement("ul", { className: "results" }));
+            return React.createElement(
+                "div",
+                { className: 'container' },
+                React.createElement(
+                    "a",
+                    { className: 'start', onClick: this.start.bind(this) },
+                    "Start"
+                ),
+                React.createElement(
+                    "a",
+                    { className: 'stop', onClick: this.stop.bind(this) },
+                    "Stop"
+                ),
+                React.createElement(
+                    "a",
+                    { className: 'reset', onClick: this.reset.bind(this) },
+                    "Reset"
+                ),
+                React.createElement(
+                    "a",
+                    { className: 'add-score', onClick: this.addToList.bind(this) },
+                    "Add Score"
+                ),
+                React.createElement(
+                    "a",
+                    { className: 'clear', onClick: this.clearList.bind(this) },
+                    "Clear Scores"
+                ),
+                React.createElement(
+                    "div",
+                    { className: 'stopwatch' },
+                    this.format(this.state.times)
+                ),
+                React.createElement(
+                    "ul",
+                    { className: 'results' },
+                    this.state.results.map(function (result) {
+                        return React.createElement(
+                            "li",
+                            null,
+                            result
+                        );
+                    })
+                )
+            );
         }
     }]);
 
     return Stopwatch;
 }(React.Component);
 
-var app = React.createElement(Stopwatch);
-ReactDOM.render(app, document.getElementById("app"));
+ReactDOM.render(React.createElement(Stopwatch, null), document.getElementById("app"));
