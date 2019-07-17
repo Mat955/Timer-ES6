@@ -5,7 +5,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel script.js --watch --out-file script-compiled.js"
+    "start": "babel script.js --watch --out-file build.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/Mat955/EcmaScript6#readme",
   "devDependencies": {
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-react": "^7.0.0",
     "babel-cli": "^6.26.0",
-    "babel-preset-latest": "^6.24.1"
-  }
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^9.0.0"
+  },
+  "dependencies": {}
 }
